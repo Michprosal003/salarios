@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los salarios de Dafne y Mike Rosales por su servicio en la venta de pies de Dafne</title>
+  
+  <style>
+    /* Estilos generales */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Estilos de la tabla */
+    table {
+        width: 100%;
+        max-width: 900px;
+        margin: 20px 0;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    td {
+        background-color: #f9f9f9;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f1f1f1;
+    }
+
+    /* Estilos de la calculadora */
+    .calculadora {
+        margin-top: 30px;
+    }
+
+    .calculadora button {
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .calculadora button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilos de los resultados */
+    .resultado {
+        margin-top: 20px;
+    }
+
+    h1, h3 {
+        color: #333;
+    }
+
+    /* Responsividad para dispositivos pequeños */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+
+        .calculadora button {
+            padding: 8px 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 22px;
+        }
+
+        .calculadora button {
+            font-size: 14px;
+        }
+
+        .calculadora {
+            margin-top: 20px;
+        }
+
+        /* Mejorar el espaciado en pantallas muy pequeñas */
+        table {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th, td {
+            padding: 6px;
+            font-size: 14px;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Los salarios de Dafne y Mike Rosales por su servicio en la venta de pies de Dafne</h1>
+    
+    <!-- Tabla con Nombre, Valor, Fecha, Video personalizado y Minutos -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Valor</th>
+          <th>Fecha</th>
+          <th>Video Personalizado</th>
+          <th>Minutos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dafne</td>
+          <td>$7</td>
+          <td>03/02/2025</td>
+          <td>Chupando y lamiendo los pies</td>
+          <td>5 minutos</td>
+        </tr>
+        <tr>
+          <td>Mike Rosales</td>
+          <td>$3</td>
+          <td>03/02/2025</td>
+          <td>Chupando y lamiendo los pies</td>
+          <td>5 minutos</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Calculadora de Porcentaje -->
+    <div class="calculadora">
+      <h2>Calculadora de Porcentaje</h2>
+      <button onclick="calcular(40, 5)">40% x 5 dólares</button>
+      <button onclick="calcular(30, 10)">30% x 10 dólares</button>
+      <button onclick="calcular(20, 15)">20% x 15 dólares</button>
+      <button onclick="calcular(15, 20)">15% x 20 dólares</button>
+      <button onclick="calcular(16, 25)">16% x 25 dólares</button>
+      <button onclick="calcular(13.33, 30)">13.33% x 30 dólares</button>
+      <button onclick="calcular(15, 40)">15% x 40 dólares</button>
+      <button onclick="calcular(16, 50)">16% x 50 dólares</button>
+      <button onclick="calcular(16.67, 60)">16.67% x 60 dólares</button>
+    </div>
+
+    <!-- Resultado del cálculo -->
+    <div id="resultado" class="resultado">
+      <h3>Michel gana por su servicio en la venta de pies de Dafne:</h3>
+      <p id="valorResultado">0</p>
+    </div>
+  </div>
+
+  <script>
+    function calcular(porcentaje, cantidad) {
+      // Calculamos el porcentaje de la cantidad
+      let resultado = (porcentaje / 100) * cantidad;
+      
+      // Mostramos el resultado en la página
+      document.getElementById('valorResultado').textContent = "$" + resultado.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>
