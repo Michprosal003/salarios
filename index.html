@@ -1,135 +1,196 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Los salarios de Dafne y Mike Rosales por su servicio en la venta de pies de Dafne</title>
-  
-  <style>
-    /* Estilos generales */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los salarios de Dafne y Mike Rosales + Calculadora</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centra el contenido verticalmente */
+            min-height: 100vh; /* Asegura que el contenido se centre en pantallas grandes */
+        }
 
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
-
-    /* Estilos de la tabla */
-    table {
-        width: 100%;
-        max-width: 900px;
-        margin: 20px 0;
-        border-collapse: collapse;
-        margin-bottom: 40px;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #007bff;
-        color: white;
-    }
-
-    td {
-        background-color: #f9f9f9;
-    }
-
-    tr:nth-child(even) td {
-        background-color: #f1f1f1;
-    }
-
-    /* Estilos de la calculadora */
-    .calculadora {
-        margin-top: 30px;
-    }
-
-    .calculadora button {
-        padding: 10px 20px;
-        margin: 5px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .calculadora button:hover {
-        background-color: #0056b3;
-    }
-
-    /* Estilos de los resultados */
-    .resultado {
-        margin-top: 20px;
-    }
-
-    h1, h3 {
-        color: #333;
-    }
-
-    /* Responsividad para dispositivos pequeños */
-    @media (max-width: 768px) {
         .container {
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            overflow-x: auto; /* Hacer que la tabla sea desplazable en pantallas pequeñas */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Estilos de la calculadora */
+        .calculator {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 50px;
+            text-align: right;
+            background-color: #222;
+            color: white;
+            font-size: 24px;
             padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
 
-        table {
-            width: 100%;
-            margin: 10px 0;
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
         }
 
-        th, td {
-            padding: 8px;
+        .button {
+            padding: 20px;
+            font-size: 18px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .calculadora button {
-            padding: 8px 16px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        h1 {
-            font-size: 22px;
+        .button:hover {
+            background-color: #ddd;
         }
 
-        .calculadora button {
-            font-size: 14px;
+        .button:active {
+            background-color: #ccc;
         }
 
-        .calculadora {
-            margin-top: 20px;
+        .button.operator {
+            background-color: #f77f00;
+            color: white;
         }
 
-        /* Mejorar el espaciado en pantallas muy pequeñas */
-        table {
-            width: 100%;
-            margin: 10px 0;
+        .button.operator:hover {
+            background-color: #e66c00;
         }
 
-        th, td {
-            padding: 6px;
-            font-size: 14px;
+        .button.equals {
+            background-color: #4CAF50;
+            color: white;
         }
-    }
 
-  </style>
+        .button.equals:hover {
+            background-color: #45a049;
+        }
+
+        .button.clear {
+            background-color: #e53935;
+            color: white;
+        }
+
+        .button.clear:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Responsividad para dispositivos pequeños */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            table {
+                width: 100%;
+                margin: 10px 0;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .calculator {
+                width: 280px;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            table {
+                width: 100%;
+                margin: 10px 0;
+                font-size: 12px;
+            }
+
+            .calculator button {
+                font-size: 14px;
+                padding: 15px;
+            }
+
+            .calculator {
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Los salarios de Dafne y Mike Rosales por su servicio en la venta de pies de Dafne</h1>
-    
-    <!-- Tabla con Nombre, Valor, Fecha, Video personalizado y Minutos -->
+    <!-- Título de la página -->
+    <h1>Los salarios de Dafne Castillo</h1>
+
+    <!-- Tabla con los salarios -->
     <table>
       <thead>
         <tr>
@@ -138,56 +199,88 @@
           <th>Fecha</th>
           <th>Video Personalizado</th>
           <th>Minutos</th>
+          <th>Método de Pago</th>
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Dafne</td>
+          <td>$23.35</td>
+          <td>03/01/2025</td>
+          <td>VIDEO DE VOMITO</td>
+          <td>5 minutos</td>
+          <td>PAYPAL</td>
+        </tr>
+
         <tr>
           <td>Dafne</td>
           <td>$7</td>
           <td>03/02/2025</td>
           <td>Chupando y lamiendo los pies</td>
           <td>5 minutos</td>
+          <td>PAYPAL</td>
         </tr>
+
         <tr>
-          <td>Mike Rosales</td>
-          <td>$3</td>
+          <td>Dafne</td>
+          <td>$30</td>
           <td>03/02/2025</td>
-          <td>Chupando y lamiendo los pies</td>
-          <td>5 minutos</td>
+          <td>SCAT BODY</td>
+          <td>10 minutos</td>
+          <td>PAYPAL</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Calculadora de Porcentaje -->
-    <div class="calculadora">
-      <h2>Calculadora de Porcentaje</h2>
-      <button onclick="calcular(40, 5)">40% x 5 dólares</button>
-      <button onclick="calcular(30, 10)">30% x 10 dólares</button>
-      <button onclick="calcular(20, 15)">20% x 15 dólares</button>
-      <button onclick="calcular(15, 20)">15% x 20 dólares</button>
-      <button onclick="calcular(16, 25)">16% x 25 dólares</button>
-      <button onclick="calcular(13.33, 30)">13.33% x 30 dólares</button>
-      <button onclick="calcular(15, 40)">15% x 40 dólares</button>
-      <button onclick="calcular(16, 50)">16% x 50 dólares</button>
-      <button onclick="calcular(16.67, 60)">16.67% x 60 dólares</button>
-    </div>
+    <!-- Calculadora -->
+    <div class="calculator">
+        <input type="text" class="screen" id="screen" disabled>
+        <div class="buttons">
+            <button class="button clear" onclick="clearScreen()">C</button>
+            <button class="button operator" onclick="appendToScreen('/')">/</button>
+            <button class="button operator" onclick="appendToScreen('*')">*</button>
+            <button class="button operator" onclick="appendToScreen('-')">-</button>
 
-    <!-- Resultado del cálculo -->
-    <div id="resultado" class="resultado">
-      <h3>Michel gana por su servicio en la venta de pies de Dafne:</h3>
-      <p id="valorResultado">0</p>
+            <button class="button" onclick="appendToScreen('7')">7</button>
+            <button class="button" onclick="appendToScreen('8')">8</button>
+            <button class="button" onclick="appendToScreen('9')">9</button>
+            <button class="button operator" onclick="appendToScreen('+')">+</button>
+
+            <button class="button" onclick="appendToScreen('4')">4</button>
+            <button class="button" onclick="appendToScreen('5')">5</button>
+            <button class="button" onclick="appendToScreen('6')">6</button>
+            <button class="button equals" onclick="calculate()">=</button>
+
+            <button class="button" onclick="appendToScreen('1')">1</button>
+            <button class="button" onclick="appendToScreen('2')">2</button>
+            <button class="button" onclick="appendToScreen('3')">3</button>
+            <button class="button" onclick="appendToScreen('0')">0</button>
+
+            <button class="button" onclick="appendToScreen('.')">.</button>
+        </div>
     </div>
   </div>
 
-  <script>
-    function calcular(porcentaje, cantidad) {
-      // Calculamos el porcentaje de la cantidad
-      let resultado = (porcentaje / 100) * cantidad;
-      
-      // Mostramos el resultado en la página
-      document.getElementById('valorResultado').textContent = "$" + resultado.toFixed(2);
+<h3>Michel A. Rosales , Responsable del negocio de la venta de pies de Dafne </h3>
+
+<script>
+    function appendToScreen(value) {
+        document.getElementById("screen").value += value;
     }
-  </script>
+
+    function clearScreen() {
+        document.getElementById("screen").value = '';
+    }
+
+    function calculate() {
+        let screen = document.getElementById("screen");
+        try {
+            screen.value = eval(screen.value);
+        } catch (e) {
+            screen.value = 'Error';
+        }
+    }
+</script>
 
 </body>
 </html>
