@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Salarios de Dafne y Michel Rosales</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de la imagen circular */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #0069d9;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Estilos del encabezado */
+        h1 {
+            color: #343a40;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de los campos de entrada */
+        input {
+            padding: 10px;
+            margin: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        /* Estilos del botón de cierre */
+        button {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #dc3545;
+        }
+
+        /* Responsividad para dispositivos pequeños */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            td, th {
+                word-wrap: break-word;
+                text-overflow: ellipsis;
+            }
+
+            .container {
+                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            /* Hacer la tabla desplazable en pantallas pequeñas */
+            table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Ajustes en los valores de Dafne y Michel */
+            #valuesSum {
+                font-size: 16px;
+                margin-top: 15px;
+            }
+        }
+
+        /* Estilos de la calculadora */
+        .calculator {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 50px;
+            text-align: right;
+            background-color: #222;
+            color: white;
+            font-size: 24px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            padding: 20px;
+            font-size: 18px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ddd;
+        }
+
+        .button:active {
+            background-color: #ccc;
+        }
+
+        .button.operator {
+            background-color: #f77f00;
+            color: white;
+        }
+
+        .button.operator:hover {
+            background-color: #e66c00;
+        }
+
+        .button.equals {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button.equals:hover {
+            background-color: #45a049;
+        }
+
+        .button.clear {
+            background-color: #e53935;
+            color: white;
+        }
+
+        .button.clear:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Estilos para alinear los encabezados a la izquierda */
+        h3 {
+            text-align: left;
+            width: 100%;
+            padding-left: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Imagen circular -->
+    <img src="https://img.freepik.com/premium-vector/feet-circle-icon-vector-illustration-with-long-shadow-medicine-item_520826-3071.jpg" alt="Foto de Perfil" class="profile-image">
+
+    <h1>CONSULTA DE SALARIOS DE DAFNE Y MICHEL </h1>
+
+    <!-- Tabla con los salarios -->
+    <table id="salaryTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Fecha</th>
+                <th>Video Personalizado</th>
+                <th>Minutos</th>
+                <th>Método de Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de la tabla se agregarán mediante JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Mostrar los valores de Dafne y Michel -->
+    <h3 id="valuesSum">Dafne 0 Michel 0</h3>
+</div>
+
+<!-- Botón de Cerrar -->
+<button onclick="window.location.href='index.html'">Cerrar</button>
+
+<script>
+    let selectedRow = null;
+
+    // Función para agregar una nueva fila
+    function addRow() {
+        let nombreDafne = document.getElementById("nombreDafne").value;
+        let valorDafne = document.getElementById("valorDafne").value;
+        let nombreMichel = document.getElementById("nombreMichel").value;
+        let valorMichel = document.getElementById("valorMichel").value;
+        let fecha = document.getElementById("fecha").value;
+        let video = document.getElementById("video").value;
+        let minutos = document.getElementById("minutos").value;
+        let metodoPago = document.getElementById("metodoPago").value;
+
+        let table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        let newRow = table.insertRow(table.rows.length);
+
+        newRow.innerHTML = ` 
+            <td>${nombreDafne}</td>
+            <td>${valorDafne}</td>
+            <td>${nombreMichel}</td>
+            <td>${valorMichel}</td>
+            <td>${fecha}</td>
+            <td>${video}</td>
+            <td>${minutos}</td>
+            <td>${metodoPago}</td>
+        `;
+
+        // Guardar los datos en el localStorage
+        saveDataToLocalStorage();
+
+        // Limpiar los campos de entrada después de agregar la fila
+        clearInputs();
+
+        // Actualizar los valores de Dafne y Michel
+        updateValues();
+    }
+
+    // Función para eliminar una fila
+    function deleteRow(button) {
+        if (confirm("¿Estás seguro de eliminar esta fila?")) {
+            let row = button.parentElement.parentElement;
+            row.remove();
+
+            // Guardar los datos en el localStorage
+            saveDataToLocalStorage();
+
+            // Actualizar los valores de Dafne y Michel
+            updateValues();
+        }
+    }
+
+    // Función para guardar los datos en el localStorage
+    function saveDataToLocalStorage() {
+        let tableData = [];
+        let table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+
+        for (let row of table.rows) {
+            let rowData = [];
+            for (let cell of row.cells) {
+                rowData.push(cell.textContent);
+            }
+            tableData.push(rowData);
+        }
+
+        localStorage.setItem('salaryData', JSON.stringify(tableData));
+    }
+
+    // Función para cargar los datos desde el localStorage
+    function loadDataFromLocalStorage() {
+        let tableData = JSON.parse(localStorage.getItem('salaryData')) || [];
+        let table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        table.innerHTML = ''; // Limpiar la tabla actual
+
+        tableData.forEach(rowData => {
+            let newRow = table.insertRow(table.rows.length);
+            rowData.forEach((data, index) => {
+                newRow.insertCell(index).textContent = data;
+            });
+        });
+
+        // Actualizar los valores de Dafne y Michel
+        updateValues();
+    }
+
+    // Función para limpiar los campos del formulario
+    function clearInputs() {
+        document.getElementById("nombreDafne").value = '';
+        document.getElementById("valorDafne").value = '';
+        document.getElementById("nombreMichel").value = '';
+        document.getElementById("valorMichel").value = '';
+        document.getElementById("fecha").value = '';
+        document.getElementById("video").value = '';
+        document.getElementById("minutos").value = '';
+        document.getElementById("metodoPago").value = '';
+    }
+
+    // Función para actualizar los totales de Dafne y Michel
+    function updateValues() {
+        let totalDafne = 0;
+        let totalMichel = 0;
+
+        let table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        for (let i = 0; i < table.rows.length; i++) {
+            totalDafne += parseFloat(table.rows[i].cells[1].textContent) || 0;
+            totalMichel += parseFloat(table.rows[i].cells[3].textContent) || 0;
+        }
+
+        document.getElementById("valuesSum").textContent = `Dafne ${totalDafne.toFixed(2)} Michel ${totalMichel.toFixed(2)}`;
+    }
+
+    // Cargar los datos cuando se carga la página
+    window.onload = loadDataFromLocalStorage;
+</script>
+
+<h1>TABLA DE PORCENTAJES</h1>
+<table>
+    <thead>
+     
+        <th>Monto (Dólares)</th>
+        <th>Porcentaje</th>
+        <th>Michel</th>
+        <th>Dafne</th>
+        <th>Acción</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>$5</td>
+        <td>40%</td>
+        <td>$2</td>
+        <td>$3</td>
+        <td><button onclick="showEarnings('Michel', 2, 'Dafne', 3)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$10</td>
+        <td>50%</td>
+        <td>$5</td>
+        <td>$5</td>
+        <td><button onclick="showEarnings('Michel', 5, 'Dafne', 5)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$15</td>
+        <td>33.33%</td>
+        <td>$5</td>
+        <td>$10</td>
+        <td><button onclick="showEarnings('Michel', 5, 'Dafne', 10)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$20</td>
+        <td>25%</td>
+        <td>$5</td>
+        <td>$15</td>
+        <td><button onclick="showEarnings('Michel', 5, 'Dafne', 15)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$25</td>
+        <td>32%</td>
+        <td>$8</td>
+        <td>$17</td>
+        <td><button onclick="showEarnings('Michel', 8, 'Dafne', 17)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$30</td>
+        <td>33.33%</td>
+        <td>$10</td>
+        <td>$20</td>
+        <td><button onclick="showEarnings('Michel', 10, 'Dafne', 20)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$35</td>
+        <td>28.57%</td>
+        <td>$10</td>
+        <td>$25</td>
+        <td><button onclick="showEarnings('Michel', 10, 'Dafne', 25)">Mostrar</button></td>
+    </tr>
+    <tr>
+        <td>$40</td>
+        <td>37.5%</td>
+        <td>$15</td>
+        <td>$25</td>
+        <td><button onclick="showEarnings('Michel', 15, 'Dafne', 25)">Mostrar</button></td>
+    </tr>
+
+
+        
+        
+    </tbody>
+</table>
+
+<script>
+    // Función para mostrar las ganancias
+    function showEarnings(name1, value1, name2, value2) {
+        alert(name1 + " ganó " + value1 + " y " + name2 + " ganó " + value2);
+    }
+</script>
+
+</body>
+</html>
