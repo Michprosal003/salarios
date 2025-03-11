@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Salarios de Dafne y Michel Rosales</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;  /* Fondo negro */
+            color: white; /* Texto blanco */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            background-color: #000000;  /* Fondo negro */
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background-color: #000000; /* Fondo negro para la tabla */
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #444444; /* Bordes oscuros */
+        }
+
+        th {
+            background-color: #444444; /* Fondo gris oscuro para los encabezados */
+            color: white;
+            font-size: 16px;
+        }
+
+        td {
+            background-color: #333333; /* Fondo gris más oscuro para las celdas */
+            color: white;  /* Texto blanco */
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #222222;  /* Color alterno para filas pares */
+        }
+
+        tr:hover {
+            background-color: #111111; /* Color cuando el usuario pase el ratón sobre una fila */
+        }
+
+        /* Estilos del encabezado */
+        h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de la sección de valores */
+        #valuesSum {
+            font-size: 18px;
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Estilos para el formulario */
+        .form-group {
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            font-size: 14px;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            width: 300px; /* Ajustamos el tamaño para ser consistente */
+            background-color: #444444;
+            color: white; /* Texto blanco en los inputs */
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 320px; /* Ajustamos el tamaño para que coincida con los inputs */
+        }
+
+        .addButton {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .addButton:hover {
+            background-color: #218838;
+        }
+
+        .updateButton {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .updateButton:hover {
+            background-color: #0056b3;
+        }
+
+        .deleteButton {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .deleteButton:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsividad para dispositivos pequeños */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+
+            td, th {
+                padding: 10px;
+            }
+
+            .form-group input, button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Consulta de Salarios de Dafne y Michel</h1>
+
+    <!-- Tabla con los salarios -->
+    <table id="salaryTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Fecha</th>
+                <th>Video Personalizado</th>
+                <th>Minutos</th>
+                <th>Método de Pago</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de la tabla se agregarán mediante JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Formulario para agregar o editar -->
+    <h3>Agregar o Editar Salario</h3>
+    <div class="form-group">
+        <input type="text" id="nombreDafne" placeholder="Nombre" required>
+        <input type="number" id="valorDafne" placeholder="Valor" required>
+        <input type="text" id="nombreMichel" placeholder="Nombre" required>
+        <input type="number" id="valorMichel" placeholder="Valor" required>
+        <input type="date" id="fecha" required>
+        <input type="text" id="video" placeholder="Video Personalizado" required>
+        <input type="number" id="minutos" placeholder="Minutos" required>
+        <input type="text" id="metodoPago" placeholder="Método de Pago" required>
+    </div>
+
+    <!-- Botones -->
+    <button class="addButton" onclick="addRow()">Agregar</button>
+    <button class="updateButton" onclick="updateRow()">Actualizar</button>
+    <button onclick="window.location.href='consulta.html'">Go to Consulta </button>
+
+
+    <!-- Mostrar los valores de Dafne y Michel -->
+    <h3 id="valuesSum">Dafne 0 Michel 0</h3>
+
+</div>
+
+<script>
+    let selectedRow = null;
+
+    // Función para agregar una nueva fila
+    function addRow() {
+        const nombreDafne = document.getElementById("nombreDafne").value;
+        const valorDafne = parseFloat(document.getElementById("valorDafne").value);
+        const nombreMichel = document.getElementById("nombreMichel").value;
+        const valorMichel = parseFloat(document.getElementById("valorMichel").value);
+        const fecha = document.getElementById("fecha").value;
+        const video = document.getElementById("video").value;
+        const minutos = document.getElementById("minutos").value;
+        const metodoPago = document.getElementById("metodoPago").value;
+
+        const table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow(table.rows.length);
+
+        newRow.innerHTML = `
+            <td>${nombreDafne}</td>
+            <td>${valorDafne}</td>
+            <td>${nombreMichel}</td>
+            <td>${valorMichel}</td>
+            <td>${fecha}</td>
+            <td>${video}</td>
+            <td>${minutos}</td>
+            <td>${metodoPago}</td>
+            <td>
+                <button class="updateButton" onclick="editRow(this)">Editar</button>
+                <button class="deleteButton" onclick="deleteRow(this)">Eliminar</button>
+            </td>
+        `;
+
+        // Guardar los datos en el localStorage
+        saveDataToLocalStorage();
+
+        // Limpiar los campos de entrada después de agregar la fila
+        clearInputs();
+
+        // Actualizar los valores de Dafne y Michel
+        updateValues();
+    }
+
+    // Función para editar una fila seleccionada
+    function editRow(button) {
+        selectedRow = button.parentElement.parentElement;
+        document.getElementById("nombreDafne").value = selectedRow.cells[0].textContent;
+        document.getElementById("valorDafne").value = selectedRow.cells[1].textContent;
+        document.getElementById("nombreMichel").value = selectedRow.cells[2].textContent;
+        document.getElementById("valorMichel").value = selectedRow.cells[3].textContent;
+        document.getElementById("fecha").value = selectedRow.cells[4].textContent;
+        document.getElementById("video").value = selectedRow.cells[5].textContent;
+        document.getElementById("minutos").value = selectedRow.cells[6].textContent;
+        document.getElementById("metodoPago").value = selectedRow.cells[7].textContent;
+    }
+
+    // Función para actualizar la fila seleccionada
+    function updateRow() {
+        if (selectedRow) {
+            selectedRow.cells[0].textContent = document.getElementById("nombreDafne").value;
+            selectedRow.cells[1].textContent = document.getElementById("valorDafne").value;
+            selectedRow.cells[2].textContent = document.getElementById("nombreMichel").value;
+            selectedRow.cells[3].textContent = document.getElementById("valorMichel").value;
+            selectedRow.cells[4].textContent = document.getElementById("fecha").value;
+            selectedRow.cells[5].textContent = document.getElementById("video").value;
+            selectedRow.cells[6].textContent = document.getElementById("minutos").value;
+            selectedRow.cells[7].textContent = document.getElementById("metodoPago").value;
+            clearInputs();
+            selectedRow = null;
+
+            // Guardar los datos en el localStorage
+            saveDataToLocalStorage();
+
+            // Actualizar los valores de Dafne y Michel después de la actualización
+            updateValues();
+        }
+    }
+
+    // Función para eliminar una fila
+    function deleteRow(button) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+
+        // Guardar los datos en el localStorage
+        saveDataToLocalStorage();
+
+        // Actualizar los valores de Dafne y Michel después de la eliminación
+        updateValues();
+    }
+
+    // Función para actualizar los valores de Dafne y Michel
+    function updateValues() {
+        let totalDafne = 0;
+        let totalMichel = 0;
+
+        const table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        for (let i = 0; i < table.rows.length; i++) {
+            totalDafne += parseFloat(table.rows[i].cells[1].textContent) || 0;  // Suma el valor de Dafne
+            totalMichel += parseFloat(table.rows[i].cells[3].textContent) || 0;  // Suma el valor de Michel
+        }
+
+        // Mostrar los valores individuales
+        document.getElementById("valuesSum").textContent = `Dafne ${totalDafne.toFixed(2)} Michel ${totalMichel.toFixed(2)}`;
+    }
+
+    // Función para limpiar los campos de entrada
+    function clearInputs() {
+        document.getElementById("nombreDafne").value = '';
+        document.getElementById("valorDafne").value = '';
+        document.getElementById("nombreMichel").value = '';
+        document.getElementById("valorMichel").value = '';
+        document.getElementById("fecha").value = '';
+        document.getElementById("video").value = '';
+        document.getElementById("minutos").value = '';
+        document.getElementById("metodoPago").value = '';
+    }
+
+    // Función para guardar los datos en el localStorage
+    function saveDataToLocalStorage() {
+        const tableData = [];
+        const table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        for (let i = 0; i < table.rows.length; i++) {
+            const rowData = [];
+            for (let j = 0; j < table.rows[i].cells.length - 1; j++) {
+                rowData.push(table.rows[i].cells[j].textContent);
+            }
+            tableData.push(rowData);
+        }
+        localStorage.setItem('salaryData', JSON.stringify(tableData));
+    }
+
+    // Cargar los datos cuando se carga la página
+    window.onload = function() {
+        loadDataFromLocalStorage();
+    };
+
+    // Función para cargar los datos desde el localStorage
+    function loadDataFromLocalStorage() {
+        const tableData = JSON.parse(localStorage.getItem('salaryData')) || [];
+        const table = document.getElementById("salaryTable").getElementsByTagName('tbody')[0];
+        table.innerHTML = ''; // Limpiar la tabla actual
+
+        tableData.forEach(rowData => {
+            const newRow = table.insertRow(table.rows.length);
+            rowData.forEach((data, index) => {
+                newRow.insertCell(index).textContent = data;
+            });
+            const actionCell = newRow.insertCell(rowData.length);
+            actionCell.innerHTML = `
+                <button class="updateButton" onclick="editRow(this)">Editar</button>
+                <button class="deleteButton" onclick="deleteRow(this)">Eliminar</button>
+              
+
+            `;
+        });
+
+        // Actualizar los valores de Dafne y Michel
+        updateValues();
+    }
+</script>
+
+</body>
+</html>
